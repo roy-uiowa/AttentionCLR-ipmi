@@ -1,0 +1,34 @@
+# Matek et al. 2021, 5-fold CV, 80/20 per fold, 13 epochs.
+# Values marked ASSUMED are not in the paper. See reports/assumptions.md.
+defaults: [../default.yaml]
+model:
+  name: resnext50
+  output_mode: direct21
+  num_classes: 21
+  pretrained: false
+augment:
+  rotation_deg: [0, 180]
+  hflip: true
+  vflip: true
+  shift_frac: 0.25
+  shear_frac: 0.20
+  stain_method: macenko
+  stain_sigma: 0.05
+eval:
+  tolerance_classes: data/processed/tolerance_classes.yaml
+training:
+  folds: 5
+  epochs: 13
+  train_frac: 0.8
+  batch_size: 256                  # ASSUMED (paper: not stated; A100 headroom)
+  optimizer: AdamW                 # ASSUMED
+  lr: 0.0003                       # ASSUMED
+  weight_decay: 0.0001             # ASSUMED
+  loss: cross_entropy              # ASSUMED
+  schedule: cosine                 # ASSUMED (not yet wired — Drop 4)
+  imbalance:
+    mode: on_the_fly_oversample_to
+    target_per_class: 25000
+    max_samples_per_epoch: 171372  # ASSUMED (caps epoch to raw dataset size)
+  precision: 32
+  devices: auto

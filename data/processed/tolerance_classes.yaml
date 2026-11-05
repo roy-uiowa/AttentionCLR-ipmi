@@ -1,0 +1,11 @@
+# Tolerant-evaluation pairs for strict/tolerant precision/recall.
+# PLACEHOLDER. The paper encodes these in Figure 3A (blue off-diagonal cells)
+# but does not tabulate them. Replace with the digitized list before reporting
+# tolerant metrics. Each entry: [class_a, class_b] means a prediction of either
+# counts as correct for the other under tolerant evaluation.
+tolerance_pairs: []
+# Example (uncomment + verify against Fig 3A):
+# tolerance_pairs:
+#   - [Band neutrophils, Segmented neutrophils]
+#   - [Myelocytes, Metamyelocytes]
+#   - [Proerythroblasts, Erythroblasts]

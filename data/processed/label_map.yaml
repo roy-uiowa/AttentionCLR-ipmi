@@ -1,0 +1,24 @@
+# Canonical mapping: dataset folder code -> paper Table 1 class name.
+# Provenance: inferred from Matek et al. 2021, Blood 138(20):1917-1927, Table 1
+# and German hematology atlas conventions. VERIFY before training.
+ABE: Abnormal eosinophils
+ART: Artefacts
+BAS: Basophils
+BLA: Blasts
+EBO: Erythroblasts
+EOS: Eosinophils
+FGC: Faggot cells
+HAC: Hairy cells
+KSC: Smudge cells
+LYI: Immature lymphocytes
+LYT: Lymphocytes
+MMZ: Metamyelocytes
+MON: Monocytes
+MYB: Myelocytes
+NGB: Band neutrophils
+NGS: Segmented neutrophils
+NIF: Not identifiable
+OTH: Other cells
+PEB: Proerythroblasts
+PLM: Plasma cells
+PMO: Promyelocytes

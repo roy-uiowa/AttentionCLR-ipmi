@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Data (keep the raw dataset and processed manifest out of git)
+data/bone_marrow_cell_dataset/
+data/external/
+data/processed/*
+!data/processed/label_map.yaml
+!data/processed/tolerance_classes.yaml
+!data/processed/.gitkeep
+
+# Artifacts
+artifacts/
+reports/_build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

@@ -1,0 +1,5 @@
+# Strict + tolerant precision/recall (paper Table 1 / Fig 3B).
+metrics: [strict_precision, strict_recall, tolerant_precision, tolerant_recall]
+tolerance_classes: data/processed/tolerance_classes.yaml
+report_per_fold: true
+report_mean_std: true

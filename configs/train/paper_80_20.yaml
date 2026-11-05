@@ -1,0 +1,20 @@
+# Single 80/20 split (main text "Methods" primary protocol).
+defaults: [../default.yaml]
+model: ../models/resnext50.yaml
+augment: ../augment/paper_aug.yaml
+eval: ../eval/tolerant.yaml
+training:
+  folds: 1
+  epochs: 13
+  train_frac: 0.8
+  batch_size: null
+  optimizer: null
+  lr: null
+  schedule: null
+  weight_decay: null
+  loss: null
+  imbalance:
+    mode: on_the_fly_oversample_to
+    target_per_class: 25000
+  precision: 32
+  devices: auto

@@ -1,0 +1,11 @@
+# Geometric + stain augmentation per Matek 2021 Methods.
+geometric:
+  rotation_deg: [0, 180]
+  hflip: true
+  vflip: true
+  shift_frac: 0.25
+  shear_frac: 0.20
+stain:
+  method: macenko
+  # Tellez et al. default perturbation strength (paper cites ref 33)
+  sigma: 0.05

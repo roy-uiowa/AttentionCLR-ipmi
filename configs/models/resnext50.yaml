@@ -1,0 +1,11 @@
+# ResNeXt-50, C=32, 250x250 input, direct21 head.
+# Target: 23,022,933 params (torchvision resnext50_32x4d with a 21-head).
+# NOTE: paper's 23,059,094 is the authors' reference ResNeXt with a 22-head.
+# The 36,161-param gap is a stem-level divergence documented in reports/assumptions.md.
+name: resnext50
+arch: resnext50_32x4d
+output_mode: direct21
+pretrained: false
+in_channels: 3
+num_classes: 21
+expected_params: 23022933

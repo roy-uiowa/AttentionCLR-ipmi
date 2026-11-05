@@ -1,0 +1,21 @@
+# Shared defaults. Every run loads this, then overlays the model/train/augment/eval config.
+paths:
+  data_root: data/bone_marrow_cell_dataset
+  manifest: data/processed/manifest.parquet
+  label_map: data/processed/label_map.yaml
+  tolerance_classes: data/processed/tolerance_classes.yaml
+  artifacts: artifacts
+
+seed: 1337
+num_workers: 4
+image_size: 250
+
+# --- Output-head mode (decision C) -------------------------------------------
+# "direct21": 21 output nodes, one per Table 1 class. Default; matches the
+#             dataset folder layout exactly.
+# "split22":  22 output nodes + a documented merge into 21. Only used by
+#             scripts/probe_22_21_merge.py until the merge pair is resolved.
+output_mode: direct21
+num_classes: 21
+num_output_nodes: 21          # overridden by model config when output_mode == split22
+merge_21_from_22: null        # e.g. [[idx_a, idx_b], "target_class"] — set by probe

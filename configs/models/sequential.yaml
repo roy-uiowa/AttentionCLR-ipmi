@@ -1,0 +1,12 @@
+# Sequential CNN per Supplement Fig S5. Target: 303,694 params.
+name: sequential
+arch: sequential_s5
+in_channels: 3
+num_output_nodes: 22
+merge_to: 21
+expected_params: 303694
+# Assumptions (documented in reports/assumptions.md):
+conv_kernel: 3
+conv_activation: relu
+pool_sizes: [4, 4, 5]      # inferred from output shapes 250->62->15->3
+pool_strides: [4, 4, 5]
