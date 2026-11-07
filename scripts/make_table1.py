@@ -19,8 +19,8 @@ def main() -> None:
 
     # Load every fold's metrics.json.
     metrics_per_fold = []
-    for fold_dir in sorted(args.runs.glob("fold*/eval/fold*/metrics.json")):
-        metrics_per_fold.append(json.loads(fold_dir.read_text()))
+    for metrics_file in sorted(args.runs.glob("fold*/eval/metrics.json")):
+        metrics_per_fold.append(json.loads(metrics_file.read_text()))
     if not metrics_per_fold:
         raise SystemExit(f"No metrics found under {args.runs}")
 

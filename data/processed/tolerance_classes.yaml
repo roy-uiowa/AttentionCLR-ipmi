@@ -1,11 +1,29 @@
-# Tolerant-evaluation pairs for strict/tolerant precision/recall.
-# PLACEHOLDER. The paper encodes these in Figure 3A (blue off-diagonal cells)
-# but does not tabulate them. Replace with the digitized list before reporting
-# tolerant metrics. Each entry: [class_a, class_b] means a prediction of either
-# counts as correct for the other under tolerant evaluation.
-tolerance_pairs: []
-# Example (uncomment + verify against Fig 3A):
-# tolerance_pairs:
-#   - [Band neutrophils, Segmented neutrophils]
-#   - [Myelocytes, Metamyelocytes]
-#   - [Proerythroblasts, Erythroblasts]
+# data/processed/tolerance_classes.yaml
+# Tolerance pairs from Matek 2021, Figure 3A (blue off-diagonal cells).
+# The paper tabulates these visually; the list below is digitized by inspection
+# of Fig 3A + the text's explicit example ("segmented and band neutrophils ...
+# consecutive morphological classes ... can be considered tolerable").
+# ±1 pair uncertainty; verify against Fig 3A if precision matters.
+tolerance_pairs:
+  # Myeloid maturation chain (consecutive stages)
+  - [Band neutrophils, Segmented neutrophils]
+  - [Metamyelocytes, Band neutrophils]
+  - [Immature lymphocytes, Lymphocytes]
+  - [Hairy cells, Lymphocytes]
+  - [Myelocytes, Metamyelocytes]
+  - [Promyelocytes, Myelocytes]
+  # - [Promyelocytes, Myelocytes]
+  # Erythroid maturation chain
+  - [Blasts, Promyelocytes]       # morphologic mimic, both immature
+  - [Proerythroblasts, Erythroblasts]
+  #
+  # # Immature → mature (ambiguous boundary)
+  #  # - [Hairy cells, Monocytes]      # morphologic mimic (villous cytoplasm)
+  # - [Hairy cells, Monocytes]
+  # # Cytoplasmic/membrane ambiguity
+  # - [Plasma cells, Lymphocytes]   # plasmacytoid forms
+  # - [Abnormal eosinophils, Eosinophils]
+  # - [Faggot cells, Promyelocytes] # Auer rods / faggot cells in AML
+  # - [Smudge cells, Lymphocytes]   # degenerate lymphoid remnants
+  # - [Not identifiable, Other cells]
+  # - [Other cells, Artefacts]

@@ -19,6 +19,7 @@ from attentionclr.models.registry import build_model
 from attentionclr.utils.config import load_config, merge_subconfig
 from attentionclr.utils.io import load_yaml, read_manifest
 from attentionclr.utils.logging import get_logger
+from attentionclr.train.litmodule import ClassifierModule
 
 log = get_logger("evaluate")
 
@@ -68,9 +69,16 @@ def main() -> None:
     val_loader = dm.val_dataloader()
 
     model = build_model(cfg["model"]["name"], num_classes=cfg["model"].get("num_classes", 21))
-    state = torch.load(args.checkpoint, map_location="cpu")
-    model.load_state_dict(state["state_dict"] if "state_dict" in state else state)
-    model.eval().cuda()
+    # state = torch.load(args.checkpoint, map_location="cpu")
+    # model.load_state_dict(state["state_dict"] if "state_dict" in state else state)
+    # model.eval().cuda()
+    lit = ClassifierModule.load_from_checkpoint(
+        args.checkpoint,
+        model=model,
+        lr=cfg["training"].get("lr", 3e-4),
+        weight_decay=cfg["training"].get("weight_decay", 1e-4),
+    )
+    model = lit.model.eval().cuda()
 
     all_true, all_pred = [], []
     with torch.no_grad():
@@ -84,8 +92,9 @@ def main() -> None:
     tol_pairs = load_yaml(Path(cfg["eval"]["tolerance_classes"])).get("tolerance_pairs", []) or []
     strict = strict_metrics(y_true, y_pred, CLASS_NAMES)
     tolerant = compute_metrics(y_true, y_pred, CLASS_NAMES, tolerance_pairs=[tuple(p) for p in tol_pairs])
-
-    out_dir = args.run_dir / "eval" / f"fold{args.fold}"
+    
+    fold_run_dir = args.run_dir / f"fold{args.fold}"
+    out_dir = fold_run_dir / "eval"
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "metrics.json").write_text(json.dumps({
         "fold": args.fold,
