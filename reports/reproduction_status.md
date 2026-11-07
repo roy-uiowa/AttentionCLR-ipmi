@@ -228,3 +228,33 @@ df = pd.read_csv('reports/table1.csv')
 assert (df['tolerant_recall_mean'] <= 1.0).all(), 'tolerant recall > 1.0'
 print('OK')
 "
+```
+
+---
+
+## 10. Explainability (Figure 5, Figure 6)
+
+**Figure 5** — SmoothGrad (n=50 samples, σ=0.10) and Grad-CAM (target layer
+`model.layer4[-1].conv3`) on one correctly classified test cell per class.
+**Generated at:** `artifacts/explain/fold0/figure5_saliency.png`.
+**Qualitative finding:** the network's saliency and CAM overlap the cell body
+and the class-distinctive structures (nucleus for neutrophils and lymphocytes,
+granules for eosinophils, nuclear configuration for plasma cells, membrane
+for hairy cells). Background regions (empty slide, erythrocytes outside the
+cell patch) are suppressed. This matches the paper's claim (p. 8) that the
+network "has learned to focus on relevant regions of the single-cell image,
+as well as to pay attention to features known to be characteristic of
+specific cell classes."
+
+**Figure 6** — UMAP of 10,000 randomly sampled test cells' penultimate features
+(2048-d avgpool output), `n_neighbors=30`, `min_dist=0.1`, `metric=euclidean`,
+`random_state=42`. **Generated at:** `artifacts/explain/fold0/figure6_umap.png`.
+**Qualitative finding:** [TBD — fill in after visual inspection; expected:
+class clusters well separated, maturation stages adjacent, monocytes
+near unrelated classes].
+
+**Hyperparameter assumptions:**
+- SmoothGrad `n_samples=50, σ=0.10` — standard Smilkov et al. defaults; not stated in paper.
+- Grad-CAM target layer `layer4[-1].conv3` — standard for ResNet-family; not stated in paper.
+- UMAP `n_neighbors=30, min_dist=0.1` — reasonable defaults; not stated in paper.
+- Paper's "Myeloblast" example → our `Blasts` class (closest match in the 21-class schema).

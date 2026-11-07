@@ -108,3 +108,29 @@ lives here, with the reasoning and the experiment that would resolve it.
 - Local dataset: 171,372 images (Table 1: 171,374; 2 corrupt files removed).
 - known_corrupt.txt must be corrected to the two real deleted paths.
 - Manifest hash: 06033472a934c8e47d949832d6ec8b0ac71d2d1f.
+
+## SimCLR encoder param count (2026-11-XX)
+- ResNeXt-50 trunk (torchvision resnext50_32x4d, fc head removed): 22,979,904
+- CBAM (4 stages, reduction 16, 7x7 spatial kernel): +696,712
+- Total encoder: **23,676,616**
+- Encoder is strictly the trunk; the 2048-d feature vector is exposed via
+  `forward_features()`, and no fc head is present.
+
+## SimCLR encoder param count (2026-11-XX)
+- ResNeXt-50 trunk (torchvision resnext50_32x4d, fc head removed): 22,979,904
+- CBAM (4 stages, reduction 16, 7x7 spatial kernel): +696,712
+- **Total encoder: 23,676,616**
+- The encoder exposes `forward_features()` (2048-d avgpool feature); no fc head.
+- The 21-class fine-tuning head (43,029 params) is added by the fine-tune module,
+  not the encoder.
+- Reference: torchvision's `resnext50_32x4d` with default 1000-head fc is
+  25,028,904; removing fc gives the trunk 22,979,904.
+
+## NT-Xent at random init (2026-11-XX)
+- The `log(2N-1)` reference value is exact for orthonormal embeddings only
+  (all off-diagonal cosine similarities are 0).
+- For random Gaussian embeddings at N=8, D=64, τ=0.1, the loss is ~3.7
+  (log(15) + spread), not log(15)=2.71. The finite-batch spread matters at
+  small N; at SimCLR-scale N (4096+), log(2N-1) is a good reference.
+- Tests use orthonormal embeddings for the exact reference, and a range check
+  for random init.
