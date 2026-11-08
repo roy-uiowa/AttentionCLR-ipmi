@@ -1,0 +1,69 @@
+# SimCLR pretraining config: ResNeXt-50 + CBAM encoder, MGG bone marrow cells.
+# Dataset: fold-0 training split only (80% of fold-0 data; labels discarded).
+# See reports/simclr_plan.md for design rationale.
+defaults: [../default.yaml]
+
+paths:
+  # Pretraining uses the same manifest and dataset root as the supervised baseline.
+  # We deliberately do NOT use a separate "unlabeled" tree; the fold-0 train split
+  # is loaded by the data module and labels are discarded by SimCLRTwoViewDataset.
+  manifest: data/processed/manifest.parquet
+  data_root: data/bone_marrow_cell_dataset
+  artifacts: artifacts
+
+seed: 42
+num_workers: 8
+image_size: 250
+
+# --- Encoder ---------------------------------------------------------------
+encoder:
+  backbone: resnext50
+  cbam: true
+  cbam_reduction: 16
+  pretrained: false       # SimCLR from random init (ImageNet-pretrain is an ablation)
+
+# --- Projection head -------------------------------------------------------
+projection:
+  in_dim: 2048
+  hidden_dim: 2048
+  out_dim: 128
+
+# --- Loss ------------------------------------------------------------------
+loss:
+  type: ntxent
+  temperature: 0.1
+
+# --- Augmentation ----------------------------------------------------------
+augment:
+  image_size: 250
+  crop_scale: [0.5, 1.0]
+  crop_ratio: [0.75, 1.33]
+  rotation_deg: 180.0
+  hflip_p: 0.5
+  vflip_p: 0.5
+  brightness: 0.2
+  contrast: 0.2
+  saturation: 0.2
+  hue: 0.05
+  blur_p: 0.5
+  gaussian_noise_p: 0.3
+  erasing_p: 0.25
+
+# --- Data split ------------------------------------------------------------
+# We pretrain on the fold-0 training split (80%), never the fold-0 validation split.
+data:
+  fold: 0
+  split: train            # "train" = fold-0 train (80%); "val" = fold-0 val (20%)
+  batch_size: 256
+  num_workers: 8
+
+# --- Training --------------------------------------------------------------
+training:
+  epochs: 50
+  lr: 0.001
+  weight_decay: 0.0001
+  warmup_frac: 0.1
+  precision: 16-mixed      # AMP for A100
+  devices: auto
+  checkpoint_every_n_epochs: 10
+  log_every_n_steps: 20
