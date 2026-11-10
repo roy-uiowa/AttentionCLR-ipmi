@@ -54,12 +54,12 @@ augment:
 data:
   fold: 0
   split: train            # "train" = fold-0 train (80%); "val" = fold-0 val (20%)
-  batch_size: 256
+  batch_size: 448
   num_workers: 8
 
 # --- Training --------------------------------------------------------------
 training:
-  epochs: 50
+  epochs: 170
   lr: 0.001
   weight_decay: 0.0001
   warmup_frac: 0.1

@@ -1,0 +1,41 @@
+for FOLD in 0 1 2 3 4; do
+> cat "artifacts/runs/linear_probe/probe50_fold0/
+head.pt       metrics.json  
+> cat "artifacts/runs/linear_probe/probe50_fold${FOLD}/metrics.json" 
+> done
+{
+  "fold": 0,
+  "best_val_acc": 0.7964405543398979,
+  "n_train": 137097,
+  "n_val": 34275,
+  "epochs": 30,
+  "checkpoint": "artifacts/runs/simclr/pretrain/probe50/checkpoints/last.ckpt"
+}{
+  "fold": 1,
+  "best_val_acc": 0.7938730853391684,
+  "n_train": 137097,
+  "n_val": 34275,
+  "epochs": 30,
+  "checkpoint": "artifacts/runs/simclr/pretrain/probe50/checkpoints/last.ckpt"
+}{
+  "fold": 2,
+  "best_val_acc": 0.7969014413257863,
+  "n_train": 137098,
+  "n_val": 34274,
+  "epochs": 30,
+  "checkpoint": "artifacts/runs/simclr/pretrain/probe50/checkpoints/last.ckpt"
+}{
+  "fold": 3,
+  "best_val_acc": 0.7961136721713252,
+  "n_train": 137098,
+  "n_val": 34274,
+  "epochs": 30,
+  "checkpoint": "artifacts/runs/simclr/pretrain/probe50/checkpoints/last.ckpt"
+}{
+  "fold": 4,
+  "best_val_acc": 0.7962303787127268,
+  "n_train": 137098,
+  "n_val": 34274,
+  "epochs": 30,
+  "checkpoint": "artifacts/runs/simclr/pretrain/probe50/checkpoints/last.ckpt"
+}
